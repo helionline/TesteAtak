@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EfetuaPesquisa">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="valorDaPesquisa" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EfetuaPesquisaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="xml" nillable="true" type="tns:Xml" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Xml">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="listaDeResultados" type="tns:ArrayOfResultadoPesquisa" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfResultadoPesquisa">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ResultadoPesquisa" nillable="true" type="tns:ResultadoPesquisa" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ResultadoPesquisa">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="titulo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="link" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="EfetuaPesquisaSoapIn">
+    <wsdl:part name="parameters" element="tns:EfetuaPesquisa" />
+  </wsdl:message>
+  <wsdl:message name="EfetuaPesquisaSoapOut">
+    <wsdl:part name="parameters" element="tns:EfetuaPesquisaResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PesquisaGoogleSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EfetuaPesquisa">
+      <wsdl:input message="tns:EfetuaPesquisaSoapIn" />
+      <wsdl:output message="tns:EfetuaPesquisaSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PesquisaGoogleSoap" type="tns:PesquisaGoogleSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EfetuaPesquisa">
+      <soap:operation soapAction="http://tempuri.org/EfetuaPesquisa" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PesquisaGoogleSoap12" type="tns:PesquisaGoogleSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EfetuaPesquisa">
+      <soap12:operation soapAction="http://tempuri.org/EfetuaPesquisa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PesquisaGoogle">
+    <wsdl:port name="PesquisaGoogleSoap" binding="tns:PesquisaGoogleSoap">
+      <soap:address location="http://localhost:50234/PesquisaGoogle.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PesquisaGoogleSoap12" binding="tns:PesquisaGoogleSoap12">
+      <soap12:address location="http://localhost:50234/PesquisaGoogle.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
